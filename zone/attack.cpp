@@ -3130,53 +3130,16 @@ uint8 Mob::GetWeaponDamageBonus(const EQ::ItemData *weapon, bool offhand)
 	if (weapon->IsType1HWeapon() || weapon->ItemType == EQ::item::ItemTypeMartial) {
 		// we assume sinister strikes is checked before calling here
 		if (!offhand) {
-			if (delay <= 39)
-				return 1 + ((level - 28) / 3);
-			else if (delay < 43)
-				return 2 + ((level - 28) / 3) + ((delay - 40) / 3);
-			else if (delay < 45)
-				return 3 + ((level - 28) / 3) + ((delay - 40) / 3);
-			else if (delay >= 45)
-				return 4 + ((level - 28) / 3) + ((delay - 40) / 3);
+			(weapon->Damage * delay * level * 80) / 400000;
 		}
 		else {
-			return 1 + ((level - 40) / 3) * (delay / 30); // YOOO shit's useless waste of AAs
+			return ((weapon->Damage * delay * level * 80) / 400000 * GetAAByAAID(806);
 		}
 	}
 	else {
 		// 2h damage bonus
-		int64 damage_bonus = 1 + (level - 28) / 3;
-		if (delay <= 27)
-			return damage_bonus + 1;
-		// Client isn't reflecting what the dev quoted, this matches better
-		if (level > 29) {
-			int level_bonus = (level - 30) / 5 + 1;
-			if (level > 50) {
-				level_bonus++;
-				int level_bonus2 = level - 50;
-				if (level > 67)
-					level_bonus2 += 5;
-				else if (level > 59)
-					level_bonus2 += 4;
-				else if (level > 58)
-					level_bonus2 += 3;
-				else if (level > 56)
-					level_bonus2 += 2;
-				else if (level > 54)
-					level_bonus2++;
-				level_bonus += level_bonus2 * delay / 40;
-			}
-			damage_bonus += level_bonus;
-		}
-		if (delay >= 40) {
-			int delay_bonus = (delay - 40) / 3 + 1;
-			if (delay >= 45)
-				delay_bonus += 2;
-			else if (delay >= 43)
-				delay_bonus++;
-			damage_bonus += delay_bonus;
-		}
-		return damage_bonus;
+		
+		return (weapon->Damage * delay * level * 80) / 400000;
 	}
 
 	return 0;
